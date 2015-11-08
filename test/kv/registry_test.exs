@@ -2,21 +2,27 @@ defmodule KV.RegistryTest do
   use ExUnit.Case, async: true
   	
   defmodule Forwarder do
-      use GenEvent
+    use GenEvent
 
-      def handle_event(event, parent) do
-        send parent, event
-        {:ok, parent}
-      end
+    def handle_event(event, parent) do
+      send parent, event
+      {:ok, parent}
+    end
   end
 
   setup do
+    ets = :ets.new(:registry_table, [:set, :public])
+    registry = start_registry(ets)
+    {:ok, registry: registry, ets: ets}
+  end
+
+  defp start_registry(ets) do
     {:ok, sup} = KV.Bucket.Supervisor.start_link
     {:ok, manager} = GenEvent.start_link
-    {:ok, registry} = KV.Registry.start_link(:registry_table, manager, sup)
+    {:ok, registry} = KV.Registry.start_link(ets, manager, sup)
 
     GenEvent.add_mon_handler(manager, Forwarder, self())
-    {:ok, registry: registry, ets: :registry_table}
+    registry
   end
 
   test "sends events on create and crash", %{registry: registry, ets: ets} do

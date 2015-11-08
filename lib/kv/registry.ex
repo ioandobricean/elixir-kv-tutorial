@@ -32,9 +32,8 @@ defmodule KV.Registry do
   ## Server callbacks
 
   def init({table, events, buckets}) do
-    ets = :ets.new(table, [:named_table, read_concurrency: true])
     refs  = HashDict.new
-    {:ok, %{names: ets, refs: refs, events: events, buckets: buckets}}
+    {:ok, %{names: table, refs: refs, events: events, buckets: buckets}}
   end
 
   def handle_call({:create, name}, _from, state) do
