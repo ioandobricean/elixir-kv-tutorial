@@ -32,7 +32,10 @@ defmodule KV.Registry do
   ## Server callbacks
 
   def init({table, events, buckets}) do
-    refs  = HashDict.new
+    refs = :ets.foldl(fn {name, pid}, acc ->
+      HashDict.put(acc, Process.monitor(pid), name)
+    end, HashDict.new, table)
+
     {:ok, %{names: table, refs: refs, events: events, buckets: buckets}}
   end
 
