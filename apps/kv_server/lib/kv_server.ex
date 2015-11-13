@@ -43,7 +43,7 @@ defmodule KVServer do
 
     msg =
       pipe_matching x, {:ok, x},
-        read_line(soket)
+        read_line(socket)
         |> KVServer.Command.parse()
         |> KVServer.Command.run()
 
@@ -61,5 +61,6 @@ defmodule KVServer do
 
   defp format_msg({:ok, text}), do: text
   defp format_msg({:error, :unknown_command}), do: "UNKNOWN COMMAND\r\n"
+  defp format_msg({:error, :not_found}), do: "NOT FOUND\r\n"
   defp format_msg({:error, _}), do: "ERROR\r\n"
 end
