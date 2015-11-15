@@ -5,9 +5,10 @@ defmodule KVServer do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    port = Application.get_env(:kv_server, :port)
     children = [
       supervisor(Task.Supervisor, [[name: KVServer.TaskSupervisor]]),
-      worker(Task, [KVServer, :accept, [4040]]),
+      worker(Task, [KVServer, :accept, [port]]),
     ]
 
     opts = [strategy: :one_for_one, name: KVServer.Supervisor]
