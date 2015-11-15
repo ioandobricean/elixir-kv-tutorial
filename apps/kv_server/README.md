@@ -1,19 +1,18 @@
-# KVServer
+# TCP server
 
-**TODO: Add description**
+## Description
+Starts a TCP server and accept commands for KV data store.
 
-## Installation
+Commands examples:
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+>CREATE shopping
 
-  1. Add kv_server to your list of dependencies in `mix.exs`:
+>PUT shopping milk 1
 
-        def deps do
-          [{:kv_server, "~> 0.0.1"}]
-        end
+>GET shopping milk
 
-  2. Ensure kv_server is started before your application:
+>DELETE shopping eggs
 
-        def application do
-          [applications: [:kv_server]]
-        end
+## Configuration
+
+The TCP port can be modified in [config](config/config.exs).

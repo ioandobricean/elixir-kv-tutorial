@@ -1,19 +1,29 @@
-# KvUmbrella
+# KV - Key Value project
 
-**TODO: Add description**
 
-## Installation
+##Built a complete Elixir application, with its own supervision tree, configuration, tests and more.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+###The application works as a distributed key-value store. 
+###The key-value pairs are organize into buckets and those buckets are distribute across multiple nodes. 
 
-  1. Add  to your list of dependencies in `mix.exs`:
+There is simple client that allows us to connect to any of those nodes and send requests such as:
 
-        def deps do
-          [{:, "~> 0.0.1"}]
-        end
+```
+CREATE shopping
+OK
 
-  2. Ensure  is started before your application:
+PUT shopping milk 1
+OK
 
-        def application do
-          [applications: [:]]
-        end
+PUT shopping eggs 3
+OK
+
+GET shopping milk
+1
+OK
+
+DELETE shopping eggs
+OK
+```
+
+[Tutorial for learning Elixir language](http://elixir-lang.org/getting-started/mix-otp/introduction-to-mix.html)
